@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Entities;
 using Services.Leaderboard;
+using Core.Expansion.Enum;
+using Core.Domain.Leaderboard;
 
 namespace WebAPI.Controllers
 {
@@ -22,12 +24,39 @@ namespace WebAPI.Controllers
             _leaderboardService = leaderboardService;
         }
 
-        // GET: Leaderboard
-        [Route("GetLeaderboard")]
-        public IActionResult Index()
+        // Post: Leaderboard
+        [HttpPost]
+        [Route("get-leaderboard-by-topic")]
+        public IActionResult Index(object TopicName)
         {
-            var eFDbContext = _leaderboardService.GetLeaderboard();
-            return Ok(eFDbContext);
+            List<LeaderboardResultModel> resultModelList = new List<LeaderboardResultModel>();
+            try
+            {
+                var resultList = _leaderboardService.GetLeaderboard((GameType)Enum.Parse(typeof(GameType), TopicName.ToString()));
+
+                if (resultList != null && resultList.Count() > 0)
+                {
+                    foreach (var result in resultList)
+                    {
+                        if (result.Topic != null)
+                        {
+                            LeaderboardResultModel resultModel = new LeaderboardResultModel();
+                            resultModel.GameTopic = result.Type.ToString();
+                            resultModel.Student = result.Topic.Student.User.Name;
+                            resultModel.LevelId = result.Topic.LevelId;
+                            resultModel.Score = result.Topic.Score;
+                            resultModel.TimeCompleted = result.Topic.TimeCompleted;
+                            resultModelList.Add(resultModel);
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+           
+            return Ok(resultModelList);
         }
 
         //// GET: Leaderboard/Details/5

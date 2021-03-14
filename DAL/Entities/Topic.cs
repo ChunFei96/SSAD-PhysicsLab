@@ -12,5 +12,6 @@ namespace DAL.Entities
         public int Score { get; set; }
         public int TimeCompleted { get; set; }
         public int TrialCount { get; set; }
+        public virtual Students Student { get; set; }
     }
 }

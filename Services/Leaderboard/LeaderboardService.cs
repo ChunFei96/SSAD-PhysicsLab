@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DAL;
 using System.Collections.Generic;
+using Core.Expansion.Enum;
 
 namespace Services.Leaderboard
 {
@@ -15,9 +16,9 @@ namespace Services.Leaderboard
             _mapper = mapper;
         }
 
-        public List<DAL.Entities.Leaderboard> GetLeaderboard()
+        public List<DAL.Entities.Leaderboard> GetLeaderboard(GameType TopicName)
         {
-            return _unitOfWork.LeaderboardRepository.GetAndInclude(null,null, x=> x.Topic);
+            return _unitOfWork.LeaderboardRepository.GetAndInclude(l => l.Type == TopicName, null, x=> x.Topic, x=> x.Topic.Student, x=> x.Topic.Student.User);
         }
     }
 }
