@@ -30,6 +30,10 @@ namespace WebAPI.Controllers
         public IActionResult Index(object TopicName)
         {
             List<LeaderboardResultModel> resultModelList = new List<LeaderboardResultModel>();
+
+            if (TopicName == null)
+                return null;
+
             try
             {
                 var resultList = _leaderboardService.GetLeaderboard((GameType)Enum.Parse(typeof(GameType), TopicName.ToString()));
