@@ -6,7 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Services.Common;
+using Services.Game;
 using Services.Leaderboard;
+using Services.User;
 
 namespace WebAPI
 {
@@ -26,6 +29,9 @@ namespace WebAPI
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped<ILeaderboardService, LeaderboardService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<IGameService, GameService>();
 
             services.AddDbContext<EFDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

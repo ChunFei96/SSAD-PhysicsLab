@@ -7,7 +7,6 @@ namespace DAL.Entities
 {
     public class GameTopic : BaseEntity
     {
-        public int LevelId { get; set; }
-        public GameTopic Type { get; set; }
+        public Core.Expansion.Enum.GameTopic GameTopicEnum { get; set; }
     }
 }

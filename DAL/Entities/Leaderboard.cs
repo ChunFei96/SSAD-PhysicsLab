@@ -8,9 +8,12 @@ namespace DAL.Entities
 {
     public class Leaderboard : BaseEntity
     {
-        public int TopicId { get; set; }
-        public GameType Type { get; set; }
-
-        public virtual Topic Topic { get; set; }
+        public int LevelId { get; set; }
+        public int StudentId { get; set; }
+        public int Score { get; set; }
+        public int TimeCompleted { get; set; }
+        public int TrialCount { get; set; }
+        public virtual Level Level { get; set; }
+        public virtual Students Student { get; set; }
     }
 }
