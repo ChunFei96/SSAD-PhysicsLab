@@ -20,6 +20,7 @@ namespace Services.Game
             Students student = _unitOfWork.StudentsRepository.Get(s => s.UserId == user.Id).FirstOrDefault();
             if (user != null)
             {
+                var ss = Core.Expansion.Enum.GameTopic.Mass;
                 Core.Expansion.Enum.GameTopic gameTopicEnum = (Core.Expansion.Enum.GameTopic)Enum.Parse(typeof(Core.Expansion.Enum.GameTopic), topicname);
                 GameTopic gameTopic = _unitOfWork.GameTopicRepository.Get(g => g.GameTopicEnum == gameTopicEnum).FirstOrDefault();
                 if(gameTopic != null)

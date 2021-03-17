@@ -26,7 +26,7 @@ namespace Services.User
             return false;
         }
 
-        public void RegisterStudent(string username)
+        public bool RegisterStudent(string username)
         {
             Users user = _unitOfWork.UsersRepository.Get(u => u.Username.Equals(username)).FirstOrDefault();
             if (user != null)
@@ -34,7 +34,9 @@ namespace Services.User
                 user.Password = "Test1234";
                 _unitOfWork.UsersRepository.Update(user);
                 _unitOfWork.Commit();
+                return true;
             }
+            return false;
         }
 
         public void UpdateStudentCharacter(string username, string character)
@@ -54,7 +56,8 @@ namespace Services.User
 
         public List<string> GetStudentList()
         {
-            return _unitOfWork.UsersRepository.Get(u => u.Password == null && u.Role == Role.Student).Select(x => x.Name).ToList();
+            var students =  _unitOfWork.UsersRepository.Get(u => u.Password == null && u.Role == Role.Student).Select(x => x.Name).ToList();
+            return students;
         }
         public StudentProfileModel GetStudentProfile(string username)
         {

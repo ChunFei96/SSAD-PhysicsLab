@@ -58,7 +58,8 @@ namespace WebAPI.Controllers
 
                 Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(studentName.ToString());
 
-                _userService.RegisterStudent(dict["studentname"]);
+                //_userService.RegisterStudent(dict["studentname"]);
+                isValidLogin = _userService.RegisterStudent(dict["username"]);
             }
             catch (Exception e)
             {
@@ -78,7 +79,7 @@ namespace WebAPI.Controllers
 
                 Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(studentModel.ToString());
 
-                _userService.UpdateStudentCharacter(dict["studentname"], dict["character"]);
+                _userService.UpdateStudentCharacter(dict["username"], dict["character"]);
             }
             catch (Exception e)
             {

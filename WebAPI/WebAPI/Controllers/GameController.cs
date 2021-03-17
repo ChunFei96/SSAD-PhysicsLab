@@ -9,6 +9,7 @@ using DAL;
 using DAL.Entities;
 using Services.Game;
 using System.Text.Json;
+using System.Net.Http;
 
 namespace WebAPI.Controllers
 {
@@ -38,7 +39,8 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return null;
+                return NotFound();
+
             }
 
             return Ok();

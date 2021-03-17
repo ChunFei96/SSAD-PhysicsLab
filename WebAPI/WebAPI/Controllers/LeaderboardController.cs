@@ -47,6 +47,7 @@ namespace WebAPI.Controllers
                     {
                         if (result.Level != null)
                         {
+                            var aa = result.Level.GameTopic.GameTopicEnum;
                             LeaderboardResultModel resultModel = new LeaderboardResultModel();
                             resultModel.GameTopic = result.Level.GameTopic.GameTopicEnum.ToString();
                             resultModel.Student = result.Student.User.Name;

@@ -16,7 +16,7 @@ namespace Services.Common
 
         public List<string> GetEnumbyType(string enumType)
         {
-            switch(enumType)
+            switch (enumType)
             {
                 case "GameTopic":
                     return Enum.GetNames(typeof(GameTopic)).ToList();
