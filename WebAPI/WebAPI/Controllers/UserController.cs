@@ -29,7 +29,8 @@ namespace WebAPI.Controllers
         [Route("validate-login")]
         public IActionResult ValidateLogin(object loginCredential)
         {
-            bool isValidLogin = false;
+            //bool isValidLogin = false;
+            var isValidLogin = new List<string>() { "false"};
             try
             {
                 if (loginCredential == null)

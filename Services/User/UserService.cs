@@ -18,12 +18,20 @@ namespace Services.User
             _unitOfWork = unitOfWork;
         }
 
-        public bool ValidateLogin(string username, string password)
+        public List<string> ValidateLogin(string username, string password)
         {
             Users user =  _unitOfWork.UsersRepository.Get(u => u.Username.Equals(username) && u.Password.Equals(password)).FirstOrDefault();
             if (user != null)
-                return true;
-            return false;
+            {
+                var student = _unitOfWork.StudentsRepository.Get(u => u.UserId == user.Id).FirstOrDefault();
+                if (student != null)
+                {
+                    var selectedChar = student.SelectedCharacter.ToString();
+                    return new List<string>() { "true", selectedChar};
+                }
+                return new List<string>() { "true", "-1" };  //Return -1 to indicate this player havent select any Character
+            }
+            return new List<string>() { "false"};
         }
 
         public bool RegisterStudent(string username)

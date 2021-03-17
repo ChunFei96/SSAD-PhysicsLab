@@ -7,7 +7,8 @@ namespace Services.User
 {
     public interface IUserService
     {
-        bool ValidateLogin(string username, string password);
+        //bool ValidateLogin(string username, string password);
+        List<string> ValidateLogin(string username, string password);
         bool RegisterStudent(string username);
         void UpdateStudentCharacter(string username, string character);
         List<string> GetStudentList();
