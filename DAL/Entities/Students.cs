@@ -10,7 +10,7 @@ namespace DAL.Entities
     {
         public int UserId { get; set; }
 
-        public GameCharacters SelectedCharacter { get; set; }
+        public GameCharacters? SelectedCharacter { get; set; }
 
         public virtual Users User { get; set; }
     }
