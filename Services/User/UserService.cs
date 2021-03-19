@@ -24,7 +24,7 @@ namespace Services.User
             if (user != null)
             {
                 var student = _unitOfWork.StudentsRepository.Get(u => u.UserId == user.Id).FirstOrDefault();
-                if (student != null)
+                if (student != null && student.SelectedCharacter != null)
                 {
                     var selectedChar = student.SelectedCharacter.ToString();
                     return new List<string>() { "true", selectedChar};
