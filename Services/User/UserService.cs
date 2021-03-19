@@ -34,9 +34,9 @@ namespace Services.User
             return new List<string>() { "false"};
         }
 
-        public bool RegisterStudent(string username)
+        public bool RegisterStudent(string name)
         {
-            Users user = _unitOfWork.UsersRepository.Get(u => u.Username.Equals(username)).FirstOrDefault();
+            Users user = _unitOfWork.UsersRepository.Get(u => u.Name.Equals(name)).FirstOrDefault();
             if (user != null)
             {
                 user.Password = "Test1234";
