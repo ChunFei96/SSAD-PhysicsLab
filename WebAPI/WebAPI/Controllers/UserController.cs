@@ -73,6 +73,7 @@ namespace WebAPI.Controllers
         [Route("update-student-character")]
         public IActionResult UpdateStudentCharacter(object studentModel)
         {
+            bool successfulUpdate = false;
             try
             {
                 if (studentModel == null)
@@ -80,13 +81,13 @@ namespace WebAPI.Controllers
 
                 Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(studentModel.ToString());
 
-                _userService.UpdateStudentCharacter(dict["username"], dict["character"]);
+                successfulUpdate = _userService.UpdateStudentCharacter(dict["username"], dict["character"]);
             }
             catch (Exception e)
             {
                 return null;
             }
-            return Ok();
+            return Json(successfulUpdate);
         }
 
         [HttpGet]
@@ -97,6 +98,22 @@ namespace WebAPI.Controllers
             try
             {
                 studentsName = _userService.GetStudentList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return Json(studentsName);
+        }
+
+        [HttpGet]
+        [Route("get-valid-students")]
+        public IActionResult GetValidStudentList()
+        {
+            List<string> studentsName = new List<string>();
+            try
+            {
+                studentsName = _userService.GetValidStudentList();
             }
             catch (Exception e)
             {
@@ -117,7 +134,8 @@ namespace WebAPI.Controllers
 
                 Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(username.ToString());
 
-                studentProfile = _userService.GetStudentProfile(dict["username"]);
+                var aa = Convert.ToBoolean(dict["byEmail"]);
+                studentProfile = _userService.GetStudentProfile(dict["username"], aa);
             }
             catch (Exception e)
             {

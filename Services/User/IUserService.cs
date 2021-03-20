@@ -10,8 +10,9 @@ namespace Services.User
         //bool ValidateLogin(string username, string password);
         List<string> ValidateLogin(string username, string password);
         bool RegisterStudent(string username);
-        void UpdateStudentCharacter(string username, string character);
+        bool UpdateStudentCharacter(string username, string character);
         List<string> GetStudentList();
-        StudentProfileModel GetStudentProfile(string username);
+        List<string> GetValidStudentList();
+        StudentProfileModel GetStudentProfile(string username, bool byEmail);
     }
 }

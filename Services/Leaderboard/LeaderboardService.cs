@@ -15,6 +15,16 @@ namespace Services.Leaderboard
             _unitOfWork = unitOfWork;
         }
 
+        //GetLeaderboard() return all results 
+        public List<DAL.Entities.Leaderboard> GetLeaderboard()
+        {
+
+            var levels = _unitOfWork.LevelRepository.GetAll();
+            var results =  _unitOfWork.LeaderboardRepository.GetAndInclude(l => levels.Contains(l.Level), null, x => x.Level, x => x.Level.GameTopic, x => x.Student, x => x.Student.User);
+            return results;
+        }
+
+
         public List<DAL.Entities.Leaderboard> GetLeaderboard(GameTopic TopicName)
         {
             DAL.Entities.GameTopic gameTopic = _unitOfWork.GameTopicRepository.Get(g => g.GameTopicEnum == TopicName).FirstOrDefault();

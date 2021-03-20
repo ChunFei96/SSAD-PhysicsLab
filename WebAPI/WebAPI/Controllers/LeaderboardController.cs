@@ -39,7 +39,18 @@ namespace WebAPI.Controllers
             
             try
             {
-                var resultList = _leaderboardService.GetLeaderboard((Core.Expansion.Enum.GameTopic)Enum.Parse(typeof(Core.Expansion.Enum.GameTopic), dict["TopicName"].ToString()));
+                var topicName = dict["TopicName"];
+                var isTopicNameNull = String.IsNullOrEmpty(topicName);
+
+                List<Leaderboard> resultList = new List<Leaderboard>();
+                if (isTopicNameNull)
+                {
+                    resultList = _leaderboardService.GetLeaderboard();
+                }
+                else
+                {
+                    resultList = _leaderboardService.GetLeaderboard((Core.Expansion.Enum.GameTopic)Enum.Parse(typeof(Core.Expansion.Enum.GameTopic), topicName.ToString()));
+                }
 
                 if (resultList != null && resultList.Count() > 0)
                 {

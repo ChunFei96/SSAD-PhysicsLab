@@ -7,5 +7,6 @@ namespace Services.Leaderboard
     public interface ILeaderboardService
     {
         public List<DAL.Entities.Leaderboard> GetLeaderboard(Core.Expansion.Enum.GameTopic TopicId);
+        public List<DAL.Entities.Leaderboard> GetLeaderboard();
     }
 }

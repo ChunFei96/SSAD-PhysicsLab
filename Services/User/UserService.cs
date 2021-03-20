@@ -47,7 +47,7 @@ namespace Services.User
             return false;
         }
 
-        public void UpdateStudentCharacter(string username, string character)
+        public bool UpdateStudentCharacter(string username, string character)
         {
             Users user = _unitOfWork.UsersRepository.Get(u => u.Username.Equals(username)).FirstOrDefault();
             if(user != null)
@@ -58,8 +58,11 @@ namespace Services.User
                     student.SelectedCharacter = (GameCharacters)Enum.Parse(typeof(GameCharacters), character);
                     _unitOfWork.StudentsRepository.Update(student);
                     _unitOfWork.Commit();
+                    return true;
                 }
+                return false;
             }
+            return false;
         }
 
         public List<string> GetStudentList()
@@ -67,11 +70,29 @@ namespace Services.User
             var students =  _unitOfWork.UsersRepository.Get(u => u.Password == null && u.Role == Role.Student).Select(x => x.Name).ToList();
             return students;
         }
-        public StudentProfileModel GetStudentProfile(string username)
+
+        public List<string> GetValidStudentList()
+        {
+            var students = _unitOfWork.UsersRepository.Get(u => u.Status.Equals(Status.Active) && u.Role == Role.Student).Select(x => x.Name).ToList();
+            return students;
+        }
+
+        public StudentProfileModel GetStudentProfile(string username, bool byEmail)
         {
             StudentProfileModel studentProfileModel = new StudentProfileModel();
 
-            Users user = _unitOfWork.UsersRepository.Get(u => u.Username.Equals(username)).FirstOrDefault();
+            Users user;
+
+            //byEmail : indicate the passing in argument want to filter the records by [Username]. Both Username or Name are use for different cases
+            if (byEmail)
+            {
+               user = _unitOfWork.UsersRepository.Get(u => u.Username.Equals(username)).FirstOrDefault();
+            }
+            else
+            {
+               user = _unitOfWork.UsersRepository.Get(u => u.Name.Equals(username)).FirstOrDefault();
+            }
+
             if(user != null)
             {
                 Students student = _unitOfWork.StudentsRepository.Get(s => s.UserId.Equals(user.Id)).FirstOrDefault();
