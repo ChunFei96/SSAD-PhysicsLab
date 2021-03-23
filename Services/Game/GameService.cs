@@ -43,7 +43,8 @@ namespace Services.Game
                         else
                         {
                             DAL.Entities.Leaderboard existingRecord = _unitOfWork.LeaderboardRepository.Get(l => l.LevelId == level.Id && l.StudentId == student.Id).FirstOrDefault();
-                            if(score > existingRecord.Score && timecompleted > existingRecord.TimeCompleted)
+
+                            if(score > existingRecord.Score && timecompleted <= existingRecord.TimeCompleted)
                             {
                                 existingRecord.Score = score;
                                 existingRecord.TimeCompleted = timecompleted;
