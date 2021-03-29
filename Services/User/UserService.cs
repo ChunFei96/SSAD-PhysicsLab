@@ -23,13 +23,25 @@ namespace Services.User
             Users user =  _unitOfWork.UsersRepository.Get(u => u.Username.Equals(username) && u.Password.Equals(password)).FirstOrDefault();
             if (user != null)
             {
-                var student = _unitOfWork.StudentsRepository.Get(u => u.UserId == user.Id).FirstOrDefault();
-                if (student != null && student.SelectedCharacter != null)
+
+                var role = user.Role ;//(Role)Enum.Parse(typeof(Role), );
+                var isTeacherRole = role.Equals(Role.Teacher);
+
+                if (isTeacherRole)
                 {
-                    var selectedChar = student.SelectedCharacter.ToString();
-                    return new List<string>() { "true", selectedChar};
+                    return new List<string>() { "true", "99" };  //Return 99 to indicate this is teacher
                 }
-                return new List<string>() { "true", "-1" };  //Return -1 to indicate this player havent select any Character
+                else
+                {
+                    var student = _unitOfWork.StudentsRepository.Get(u => u.UserId == user.Id).FirstOrDefault();
+                    if (student != null && student.SelectedCharacter != null)
+                    {
+                        var selectedChar = student.SelectedCharacter.ToString();
+                        return new List<string>() { "true", selectedChar };
+                    }
+                    return new List<string>() { "true", "-1" };  //Return -1 to indicate this player havent select any Character
+                }
+
             }
             return new List<string>() { "false"};
         }
