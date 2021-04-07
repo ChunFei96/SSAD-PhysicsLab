@@ -25,7 +25,7 @@ namespace Services.Game
                 GameTopic gameTopic = _unitOfWork.GameTopicRepository.Get(g => g.GameTopicEnum == gameTopicEnum).FirstOrDefault();
                 if(gameTopic != null)
                 {
-                    Level level = _unitOfWork.LevelRepository.Get(l => l.GameTopicId == gameTopic.Id).FirstOrDefault();
+                    Level level = _unitOfWork.LevelRepository.Get(l => l.GameTopicId == gameTopic.Id && l.LevelNumber == Convert.ToInt32(levelnumber)).FirstOrDefault();
                     if(level != null)
                     {
                         if(!isRecordExist(student,level))
