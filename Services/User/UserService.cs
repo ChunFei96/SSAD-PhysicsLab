@@ -68,7 +68,12 @@ namespace Services.User
                 if(student != null)
                 {
                     student.SelectedCharacter = (GameCharacters)Enum.Parse(typeof(GameCharacters), character);
+                    student.ModifiedTimeStamp = DateTime.Now;  //test
                     _unitOfWork.StudentsRepository.Update(student);
+
+
+                    user.ModifiedTimeStamp = DateTime.Now; //test      
+
                     _unitOfWork.Commit();
                     return true;
                 }

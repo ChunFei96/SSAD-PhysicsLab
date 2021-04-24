@@ -54,7 +54,7 @@ namespace WebAPI.Controllers
 
                 if (resultList != null && resultList.Count() > 0)
                 {
-                    foreach (var result in resultList)
+                    foreach (var result in resultList.OrderByDescending(c=> c.Score).ThenBy(c=>c.TimeCompleted))
                     {
                         if (result.Level != null)
                         {
